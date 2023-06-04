@@ -15,10 +15,8 @@ app.get("/", (req, res)=> {
     res.send("Hello world")
 })
 
-
 app.use(cors())
 app.use(express.json())
-
 
 app.listen(8000, () => {
 	console.log('Server is running')
@@ -35,22 +33,13 @@ app.post('/food', async (req, res)=> {
 	}
 })
 
-app.get('/allFood', async (req,res)=> {
-	try {
-		const allFood = await Food.find()
-		res.status(200).json(allFood)
-	} catch (error) {
-		console.log(error);
-	}
-})
-
 app.get('/food', async (req,res)=> {
 	const {shop} = req.query
 	try {
 		const kfc = await Food.find({storeName: shop})
 		res.status(200).json(kfc)
 	} catch (error) {
-		console.log(error);
+		res.status(500).json({message:error})
 	}
 })
 
